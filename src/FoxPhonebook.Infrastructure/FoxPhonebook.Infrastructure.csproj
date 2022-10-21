@@ -12,10 +12,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="Persistence\EntityConfigurations\" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<ProjectReference Include="..\FoxPhonebook.Application\FoxPhonebook.Application.csproj" />
 	</ItemGroup>
 
