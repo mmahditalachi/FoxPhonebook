@@ -11,7 +11,6 @@ namespace FoxPhonebook.Domain.AggregatesModel.ContactAggregateModel
         public ContactEmail(string email)
         {
             Guard.Against.NullOrEmpty(email);
-
             Email = Guard.Against.InvalidFormat(email, nameof(email), Utility.EmailRegexPattern, "invalid email");
         }
 

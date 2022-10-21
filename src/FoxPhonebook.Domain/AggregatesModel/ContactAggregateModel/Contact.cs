@@ -51,15 +51,44 @@ namespace FoxPhonebook.Domain.AggregatesModel.ContactAggregateModel
             _contactTags.Add(new ContactTag(this, tag));
         }
 
-        public void AddContactEmail(ContactEmail contactEmail)
+        public void RemoveContactTag(Guid tagId)
+        {
+            Guard.Against.Default(tagId);
+
+            var contacttag = _contactTags.SingleOrDefault(e => e.TagId == tagId);
+
+            if (contacttag is null)
+                return;
+
+            _contactTags.Remove(contacttag);
+        }
+
+        public void AddOrUpdateContactEmail(ContactEmail contactEmail)
         {
             if (contactEmail is null)
                 throw new ArgumentNullException();
 
-            if (_emails.Any(e => e.Email == contactEmail.Email))
+            var entry = _emails.SingleOrDefault(e => e.Email == contactEmail.Email);
+
+            if (entry is null)
+                _emails.Add(contactEmail);
+
+            else if (!entry.Equals(contactEmail))
+            {
+                _emails.Remove(entry);
+                _emails.Add(contactEmail);
+            }
+        }
+
+        public void RemoveContactEmail(string email)
+        {
+            Guard.Against.NullOrEmpty(email);
+            var contactEmail = _emails.SingleOrDefault(e => e.Email == email);
+
+            if (contactEmail is null)
                 return;
 
-            _emails.Add(contactEmail);
+            _emails.Remove(contactEmail);
         }
 
         public void AddOrUpdatePhoneNumber(ContactPhoneNumber contactPhoneNumber)
@@ -67,16 +96,27 @@ namespace FoxPhonebook.Domain.AggregatesModel.ContactAggregateModel
             if (contactPhoneNumber is null)
                 throw new ArgumentNullException();
 
-            var phoneNumber = _phoneNumbers.SingleOrDefault(e => e.PhoneNumber == contactPhoneNumber.PhoneNumber);
+            var entry = _phoneNumbers.SingleOrDefault(e => e.PhoneNumber == contactPhoneNumber.PhoneNumber);
 
-            if (phoneNumber is null)
+            if (entry is null)
                 _phoneNumbers.Add(contactPhoneNumber);
 
-            else if (!phoneNumber.Equals(contactPhoneNumber))
+            else if (!entry.Equals(contactPhoneNumber))
             {
-                _phoneNumbers.Remove(phoneNumber);
+                _phoneNumbers.Remove(entry);
                 _phoneNumbers.Add(contactPhoneNumber);
             }
+        }
+
+        public void RemovePhoneNumber(string phoneNumber)
+        {
+            Guard.Against.NullOrEmpty(phoneNumber);
+            var contactPhone = _phoneNumbers.SingleOrDefault(e => e.PhoneNumber == phoneNumber);
+
+            if (contactPhone is null)
+                return;
+
+            _phoneNumbers.Remove(contactPhone);
         }
 
         public void Update(ContactPersonalDetails personalDetails, DateOnly birthDate, bool isFavorite)
@@ -91,5 +131,6 @@ namespace FoxPhonebook.Domain.AggregatesModel.ContactAggregateModel
 
             PersonalDetails = personalDetails;
         }
+
     }
 }

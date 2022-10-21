@@ -1,5 +1,6 @@
 ﻿using FoxPhonebook.API;
 using FoxPhonebook.Application.Common.Interfaces;
+using FoxPhonebook.Domain.AggregatesModel.ContactAggregateModel;
 using FoxPhonebook.Infrastructure.Persistence;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;

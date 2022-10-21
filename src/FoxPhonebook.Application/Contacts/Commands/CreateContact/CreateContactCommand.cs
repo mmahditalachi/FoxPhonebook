@@ -37,7 +37,7 @@ namespace FoxPhonebook.Application.Contacts.Commands.CreateContact
             var contact = new Contact(personalDetails, request.BirthDate, request.IsFavorite);
 
             foreach (var email in request.EmailList)
-                contact.AddContactEmail(email);
+                contact.AddOrUpdateContactEmail(email);
 
             foreach (var phoneNumber in request.PhoneNumbers)
                 contact.AddOrUpdatePhoneNumber(phoneNumber);
