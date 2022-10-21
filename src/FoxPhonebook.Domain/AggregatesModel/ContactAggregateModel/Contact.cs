@@ -15,8 +15,10 @@ namespace FoxPhonebook.Domain.AggregatesModel.ContactAggregateModel
 
         public Contact(ContactPersonalDetails personalDetails, DateOnly birthDate, bool isFavorite)
         {
+            Id = Guid.NewGuid();
+
             PersonalDetails = personalDetails;
-            BirthDate = birthDate;
+            BirthDate = Guard.Against.Default(birthDate);
             IsFavorite = isFavorite;
 
             _phoneNumbers = new List<ContactPhoneNumber>();
@@ -38,26 +40,56 @@ namespace FoxPhonebook.Domain.AggregatesModel.ContactAggregateModel
         private List<ContactTag> _contactTags;
         public IReadOnlyCollection<ContactTag> ContactTags => _contactTags;
 
-        //public void AddContactTag(ContactTag contactTag)
-        //{
-        //    if (contactTag is null)
-        //        throw new ArgumentNullException();
+        public void AddContactTag(Tag tag)
+        {
+            if (tag is null)
+                throw new ArgumentNullException();
 
-        //    if (_contactTag.Any(e => e.Id == contactTag.Id))
-        //        return;
+            if (_contactTags.Any(e => e.TagId == tag.Id))
+                return;
 
-        //    _contactTag.Add(contactTag);
-        //}
+            _contactTags.Add(new ContactTag(this, tag));
+        }
 
-        //public void AddContactEmail(ContactEmail contactEmail)
-        //{
-        //    if (contactEmail is null)
-        //        throw new ArgumentNullException();
+        public void AddContactEmail(ContactEmail contactEmail)
+        {
+            if (contactEmail is null)
+                throw new ArgumentNullException();
 
-        //    if (_contactEmails.Any(e => e.Email == contactEmail.Email))
-        //        return;
+            if (_emails.Any(e => e.Email == contactEmail.Email))
+                return;
 
-        //    _contactTag.Add(contactTag);
-        //}
+            _emails.Add(contactEmail);
+        }
+
+        public void AddOrUpdatePhoneNumber(ContactPhoneNumber contactPhoneNumber)
+        {
+            if (contactPhoneNumber is null)
+                throw new ArgumentNullException();
+
+            var phoneNumber = _phoneNumbers.SingleOrDefault(e => e.PhoneNumber == contactPhoneNumber.PhoneNumber);
+
+            if (phoneNumber is null)
+                _phoneNumbers.Add(contactPhoneNumber);
+
+            else if (!phoneNumber.Equals(contactPhoneNumber))
+            {
+                _phoneNumbers.Remove(phoneNumber);
+                _phoneNumbers.Add(contactPhoneNumber);
+            }
+        }
+
+        public void Update(ContactPersonalDetails personalDetails, DateOnly birthDate, bool isFavorite)
+        {
+            BirthDate = Guard.Against.Default(birthDate);
+            IsFavorite = isFavorite;
+
+            Guard.Against.Null(personalDetails);
+
+            if (PersonalDetails.Equals(personalDetails))
+                return;
+
+            PersonalDetails = personalDetails;
+        }
     }
 }

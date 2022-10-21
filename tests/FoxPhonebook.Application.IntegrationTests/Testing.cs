@@ -37,7 +37,7 @@ public class Testing
 
         services.AddSingleton(Mock.Of<IWebHostEnvironment>(w =>
             w.EnvironmentName == "Development" &&
-            w.ApplicationName == "Aesir.Catalog.API"));
+            w.ApplicationName == "FoxPhonebook.API"));
 
         services.AddLogging();
 
@@ -151,15 +151,7 @@ public class Testing
 
         return await context.Set<TEntity>().CountAsync(predicate);
     }
-
-    //public static async Task SeedAsync()
-    //{
-    //    using var scope = _scopeFactory.CreateScope();
-
-    //    var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-
-    //    await ProductSeed.SeedDataAsync(context);
-    //}
+   
 
     [OneTimeTearDown]
     public void RunAfterAnyTests()

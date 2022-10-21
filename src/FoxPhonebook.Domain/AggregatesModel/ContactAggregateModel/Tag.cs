@@ -10,6 +10,7 @@ namespace FoxPhonebook.Domain.AggregatesModel.ContactAggregateModel
     {
         public Tag(string title)
         {
+            Id = Guid.NewGuid();
             Title = Guard.Against.InvalidNameInput(title, nameof(title));
         }
 

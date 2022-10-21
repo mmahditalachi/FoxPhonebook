@@ -1,4 +1,5 @@
 ﻿using FoxPhonebook.Application.Common.Interfaces;
+using FoxPhonebook.Domain.AggregatesModel.ContactAggregateModel;
 using FoxPhonebook.Domain.Common;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -13,7 +14,7 @@ namespace FoxPhonebook.Infrastructure.Persistence
     public class ApplicationDbContext : DbContext, IApplicationDbContext
     {
         private readonly ICurrentUserService _currentUserService;
-        private readonly IDomainEventService _domainEventService;
+        private readonly IDomainEventService _domainEventService;        
 
         public ApplicationDbContext(
             DbContextOptions<ApplicationDbContext> options,
@@ -24,6 +25,9 @@ namespace FoxPhonebook.Infrastructure.Persistence
             _currentUserService = currentUserService;
             _domainEventService = domainEventService;
         }
+
+        public DbSet<Contact> Contacts => Set<Contact>();
+        public DbSet<Tag> Tags => Set<Tag>();
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
