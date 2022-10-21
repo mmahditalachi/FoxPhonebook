@@ -31,7 +31,7 @@ namespace FoxPhonebook.Application.Contacts.Commands.UpdateContact
                 .GreaterThan(DateOnly.MinValue)
                 .LessThan(DateOnly.MaxValue);
 
-            RuleFor(e => e.PhoneNumbers)
+            RuleFor(e => e.PhoneNumberList)
                 .NotNull()
                 .Must(e => e.Count > 0);
         }

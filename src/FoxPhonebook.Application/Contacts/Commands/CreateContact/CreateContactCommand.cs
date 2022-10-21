@@ -18,7 +18,7 @@ namespace FoxPhonebook.Application.Contacts.Commands.CreateContact
 
         public IReadOnlyCollection<Guid> TagIdList { get; init; } = new List<Guid>();
         public IReadOnlyCollection<ContactEmail> EmailList { get; init; } = new List<ContactEmail>();
-        public IReadOnlyCollection<ContactPhoneNumber> PhoneNumbers { get; init; } = new List<ContactPhoneNumber>();
+        public IReadOnlyCollection<ContactPhoneNumber> PhoneNumberList { get; init; } = new List<ContactPhoneNumber>();
 
     }
 
@@ -39,7 +39,7 @@ namespace FoxPhonebook.Application.Contacts.Commands.CreateContact
             foreach (var email in request.EmailList)
                 contact.AddOrUpdateContactEmail(email);
 
-            foreach (var phoneNumber in request.PhoneNumbers)
+            foreach (var phoneNumber in request.PhoneNumberList)
                 contact.AddOrUpdatePhoneNumber(phoneNumber);
 
             foreach (var tagId in request.TagIdList)

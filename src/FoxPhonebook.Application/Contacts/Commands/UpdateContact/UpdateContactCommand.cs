@@ -19,7 +19,7 @@ namespace FoxPhonebook.Application.Contacts.Commands.UpdateContact
 
         public IReadOnlyCollection<Guid> TagIdList { get; init; } = new List<Guid>();
         public IReadOnlyCollection<ContactEmail> EmailList { get; init; } = new List<ContactEmail>();
-        public IReadOnlyCollection<ContactPhoneNumber> PhoneNumbers { get; init; } = new List<ContactPhoneNumber>();
+        public IReadOnlyCollection<ContactPhoneNumber> PhoneNumberList { get; init; } = new List<ContactPhoneNumber>();
     }
 
     public class UpdateContactCommandHandler : IRequestHandler<UpdateContactCommand, Guid>
@@ -47,10 +47,10 @@ namespace FoxPhonebook.Application.Contacts.Commands.UpdateContact
             foreach (var contactEmail in request.EmailList)
                 contact.AddOrUpdateContactEmail(contactEmail);
             
-            var removedPhoneNumbers = contact.PhoneNumbers.Except(request.PhoneNumbers).ToList();
+            var removedPhoneNumbers = contact.PhoneNumbers.Except(request.PhoneNumberList).ToList();
             foreach (var contactPhoneNumber in removedPhoneNumbers)
                 contact.RemovePhoneNumber(contactPhoneNumber.PhoneNumber);
-            foreach (var contactPhoneNumber in request.PhoneNumbers)
+            foreach (var contactPhoneNumber in request.PhoneNumberList)
                 contact.AddOrUpdatePhoneNumber(contactPhoneNumber);
 
             var removedTags = contact.ContactTags.Select(e => e.TagId).Except(request.TagIdList).ToList();

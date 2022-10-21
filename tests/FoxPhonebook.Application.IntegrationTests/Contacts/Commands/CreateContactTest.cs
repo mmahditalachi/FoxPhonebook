@@ -16,7 +16,7 @@ public class CreateContactTest : TestBase
     [Test]
     public async Task ShouldCreateContact_WhenTagExist()
     {
-        // Arrenge
+        // Arrange
         var tag = new Tag("school");
         await AddAsync(tag);
 
@@ -28,7 +28,7 @@ public class CreateContactTest : TestBase
             BirthDate = new DateOnly(1999, 11, 24),
             EmailList = new List<ContactEmail> { new ContactEmail("mohammadmahditalachi@gmail.com") },
             IsFavorite = true,
-            PhoneNumbers = new List<ContactPhoneNumber>
+            PhoneNumberList = new List<ContactPhoneNumber>
             {
                 new ContactPhoneNumber("home", "22222222"),
                 new ContactPhoneNumber("mobile", "09127000000"),
@@ -47,8 +47,8 @@ public class CreateContactTest : TestBase
         item?.PersonalDetails.CompanyName.Should().Be(cmd.CompanyName.ToLower());
         item?.BirthDate.Should().Be(cmd.BirthDate);
         item?.IsFavorite.Should().Be(cmd.IsFavorite);
-        item?.PhoneNumbers.Should().HaveCount(cmd.PhoneNumbers.Count);
-        item?.PhoneNumbers.Should().BeEquivalentTo(cmd.PhoneNumbers);
+        item?.PhoneNumbers.Should().HaveCount(cmd.PhoneNumberList.Count);
+        item?.PhoneNumbers.Should().BeEquivalentTo(cmd.PhoneNumberList);
         item?.Emails.Should().HaveCount(cmd.EmailList.Count);
         item?.Emails.Should().BeEquivalentTo(cmd.EmailList);
 
@@ -59,7 +59,7 @@ public class CreateContactTest : TestBase
     [Test]
     public async Task ShouldNotCreateContact_WhenPhoneNumberIsEmpty()
     {
-        // Arrenge
+        // Arrange
         var tag = new Tag("school");
         await AddAsync(tag);
 
@@ -82,7 +82,7 @@ public class CreateContactTest : TestBase
     [Test]
     public async Task ShouldCreateContact_WhenTagNotExist()
     {
-        // Arrenge
+        // Arrange
         var cmd = new CreateContactCommand()
         {
             FirstName = "Mohammad",
@@ -91,7 +91,7 @@ public class CreateContactTest : TestBase
             BirthDate = new DateOnly(1999, 11, 24),
             EmailList = new List<ContactEmail> { new ContactEmail("mohammadmahditalachi@gmail.com") },
             IsFavorite = true,
-            PhoneNumbers = new List<ContactPhoneNumber>
+            PhoneNumberList = new List<ContactPhoneNumber>
             {
                 new ContactPhoneNumber("home", "22222222"),
                 new ContactPhoneNumber("mobile", "09127000000"),
@@ -109,8 +109,8 @@ public class CreateContactTest : TestBase
         item?.PersonalDetails.CompanyName.Should().Be(cmd.CompanyName.ToLower());
         item?.BirthDate.Should().Be(cmd.BirthDate);
         item?.IsFavorite.Should().Be(cmd.IsFavorite);
-        item?.PhoneNumbers.Should().HaveCount(cmd.PhoneNumbers.Count);
-        item?.PhoneNumbers.Should().BeEquivalentTo(cmd.PhoneNumbers);
+        item?.PhoneNumbers.Should().HaveCount(cmd.PhoneNumberList.Count);
+        item?.PhoneNumbers.Should().BeEquivalentTo(cmd.PhoneNumberList);
         item?.Emails.Should().HaveCount(cmd.EmailList.Count);
         item?.Emails.Should().BeEquivalentTo(cmd.EmailList);
 
