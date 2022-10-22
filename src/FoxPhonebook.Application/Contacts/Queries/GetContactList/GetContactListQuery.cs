@@ -1,10 +1,5 @@
 ﻿using FoxPhonebook.Application.Common.Mappings;
 using FoxPhonebook.Application.Common.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FoxPhonebook.Application.Contacts.Queries.GetContactList
 {
@@ -30,15 +25,15 @@ namespace FoxPhonebook.Application.Contacts.Queries.GetContactList
             var query = _context.Contacts.AsQueryable();
 
             if (request.TagId.HasValue)
-                query = query.Where(e => e.ContactTags.Any(p=>p.TagId == request.TagId.Value));
+                query = query.Where(e => e.ContactTags.Any(p => p.TagId == request.TagId.Value));
             if (!string.IsNullOrEmpty(request.PhoneNumberfilter))
                 query = query.Where(e => e.PhoneNumbers.Any(e => e.PhoneNumber.Contains(request.PhoneNumberfilter)));
 
             return await query.ProjectTo<GetContactListDto>(_mapper.ConfigurationProvider)
-                .OrderBy(e=>e.LastName)
-                .OrderBy(e=>e.FirstName)
+                .OrderBy(e => e.LastName)
+                .OrderBy(e => e.FirstName)
                 .AsNoTracking()
-                .PaginatedListAsync(request.PageNumber, request.PageSize ,cancellationToken);
+                .PaginatedListAsync(request.PageNumber, request.PageSize, cancellationToken);
         }
     }
 }

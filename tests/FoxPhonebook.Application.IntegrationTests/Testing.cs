@@ -1,6 +1,5 @@
 ﻿using FoxPhonebook.API;
 using FoxPhonebook.Application.Common.Interfaces;
-using FoxPhonebook.Domain.AggregatesModel.ContactAggregateModel;
 using FoxPhonebook.Infrastructure.Persistence;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
@@ -9,7 +8,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using Respawn;
-using System.IO;
 using System.Linq.Expressions;
 
 namespace FoxPhonebook.Application.IntegrationTests;
@@ -152,7 +150,7 @@ public class Testing
 
         return await context.Set<TEntity>().CountAsync(predicate);
     }
-   
+
 
     [OneTimeTearDown]
     public void RunAfterAnyTests()

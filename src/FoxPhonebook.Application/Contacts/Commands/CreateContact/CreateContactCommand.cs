@@ -1,11 +1,6 @@
 ﻿using FoxPhonebook.Application.Common.Exceptions;
 using FoxPhonebook.Domain.AggregatesModel.ContactAggregateModel;
 using FoxPhonebook.Domain.Events;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FoxPhonebook.Application.Contacts.Commands.CreateContact
 {
@@ -35,7 +30,7 @@ namespace FoxPhonebook.Application.Contacts.Commands.CreateContact
         public async Task<Guid> Handle(CreateContactCommand request, CancellationToken cancellationToken)
         {
             var personalDetails = new ContactPersonalDetails(request.FirstName, request.LastName, request.CompanyName);
-            var contact = new Contact(personalDetails,DateOnly.FromDateTime(request.BirthDate), request.IsFavorite);
+            var contact = new Contact(personalDetails, DateOnly.FromDateTime(request.BirthDate), request.IsFavorite);
 
             foreach (var email in request.EmailList)
                 contact.AddOrUpdateContactEmail(email);

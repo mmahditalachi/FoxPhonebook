@@ -40,7 +40,7 @@ public class Program
             logger.LogError(ex, "An error occurred while migrating or seeding the database.");
             throw;
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             logger.LogError(ex, "An error occurred while startup");
             throw;

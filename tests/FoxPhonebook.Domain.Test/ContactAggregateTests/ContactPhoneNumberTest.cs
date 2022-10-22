@@ -1,9 +1,4 @@
 ﻿using FoxPhonebook.Domain.AggregatesModel.ContactAggregateModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FoxPhonebook.Domain.Test.ContactAggregateTests
 {
@@ -18,7 +13,7 @@ namespace FoxPhonebook.Domain.Test.ContactAggregateTests
 
             // Act
             var contactPhone = new ContactPhoneNumber(title, phoneNumber);
-            
+
             // Assert
             contactPhone.Title.Should().Be("home");
             contactPhone.PhoneNumber.Should().Be("09126000000");
@@ -32,7 +27,8 @@ namespace FoxPhonebook.Domain.Test.ContactAggregateTests
             string phoneNumber = "09sd12sds6sds0sds00fd000";
 
             // Act and Assert
-            FluentActions.Invoking(() => {
+            FluentActions.Invoking(() =>
+            {
                 var contactPhone = new ContactPhoneNumber(title, phoneNumber);
             }).Should().Throw<ArgumentException>();
         }

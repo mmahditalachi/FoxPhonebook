@@ -1,11 +1,6 @@
 ﻿using FoxPhonebook.Domain.AggregatesModel.ContactAggregateModel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FoxPhonebook.Infrastructure.Persistence.EntityConfigurations;
 
@@ -28,13 +23,14 @@ public class ContactEntityTypeConfiguration : IEntityTypeConfiguration<Contact>
             cfg.Property(e => e.LastName)
             .HasColumnName("LastName")
             .HasMaxLength(75);
-            
+
             cfg.Property(e => e.CompanyName)
             .HasColumnName("CompanyName")
-            .HasMaxLength(75);                
+            .HasMaxLength(75);
         });
 
-        builder.OwnsMany(e=>e.Emails, cfg =>{
+        builder.OwnsMany(e => e.Emails, cfg =>
+        {
             cfg.WithOwner().HasForeignKey("ContactId");
             cfg.Property<Guid>("Id");
             cfg.HasKey("Id");
@@ -45,7 +41,8 @@ public class ContactEntityTypeConfiguration : IEntityTypeConfiguration<Contact>
         var emailsNavigation = builder.Metadata.FindNavigation(nameof(Contact.Emails));
         emailsNavigation?.SetPropertyAccessMode(PropertyAccessMode.Field);
 
-        builder.OwnsMany(e => e.PhoneNumbers, cfg => {
+        builder.OwnsMany(e => e.PhoneNumbers, cfg =>
+        {
             cfg.WithOwner().HasForeignKey("ContactId");
             cfg.Property<Guid>("Id");
             cfg.HasKey("Id");
@@ -81,9 +78,9 @@ public class ContactTagEntityTypeConfiguration : IEntityTypeConfiguration<Contac
         builder.ToTable("ContactTag");
         builder.HasKey(e => new { e.TagId, e.ContactId });
 
-        builder.HasOne(w=>w.Contact)
-            .WithMany(e => e.ContactTags) 
-            .HasForeignKey(e=>e.ContactId);
+        builder.HasOne(w => w.Contact)
+            .WithMany(e => e.ContactTags)
+            .HasForeignKey(e => e.ContactId);
 
         builder.HasOne(w => w.Tag)
             .WithMany()

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace FoxPhonebook.Domain.Common;
+﻿namespace FoxPhonebook.Domain.Common;
 
 public interface IHasDomainEvent
 {

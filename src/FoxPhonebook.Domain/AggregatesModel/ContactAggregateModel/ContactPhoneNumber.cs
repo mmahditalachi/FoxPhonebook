@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FoxPhonebook.Domain.AggregatesModel.ContactAggregateModel
+﻿namespace FoxPhonebook.Domain.AggregatesModel.ContactAggregateModel
 {
     public class ContactPhoneNumber : ValueObject
     {
@@ -12,7 +6,8 @@ namespace FoxPhonebook.Domain.AggregatesModel.ContactAggregateModel
         {
             Title = Guard.Against.InvalidNameInput(title, nameof(title));
 
-            PhoneNumber = Guard.Against.InvalidInput(phoneNumber, nameof(phoneNumber), e => {
+            PhoneNumber = Guard.Against.InvalidInput(phoneNumber, nameof(phoneNumber), e =>
+            {
 
                 phoneNumber = phoneNumber.ReplaceSpecialCharacter()
                     .ReplaceMoreThanOneSpace();

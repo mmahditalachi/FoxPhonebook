@@ -2,19 +2,14 @@
 using FoxPhonebook.Domain.AggregatesModel.ContactAggregateModel;
 using FoxPhonebook.Domain.Common;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FoxPhonebook.Infrastructure.Persistence
 {
     public class ApplicationDbContext : DbContext, IApplicationDbContext
     {
         private readonly ICurrentUserService _currentUserService;
-        private readonly IDomainEventService _domainEventService;        
+        private readonly IDomainEventService _domainEventService;
 
         public ApplicationDbContext(
             DbContextOptions<ApplicationDbContext> options,

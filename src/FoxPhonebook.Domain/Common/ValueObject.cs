@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace FoxPhonebook.Domain
+﻿namespace FoxPhonebook.Domain
 {
     public abstract class ValueObject
     {

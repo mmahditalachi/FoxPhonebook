@@ -5,7 +5,6 @@ using FoxPhonebook.Application.Contacts.Commands.UpdateContact;
 using FoxPhonebook.Application.Contacts.Queries.GetContact;
 using FoxPhonebook.Application.Contacts.Queries.GetContactList;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FoxPhonebook.API.Controllers

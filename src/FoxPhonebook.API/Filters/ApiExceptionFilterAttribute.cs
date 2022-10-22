@@ -1,11 +1,7 @@
-﻿using FluentValidation;
-using FoxPhonebook.Application.Common.Exceptions;
-using Microsoft.AspNetCore.Http;
+﻿using FoxPhonebook.Application.Common.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Serilog;
-using System;
-using System.Collections.Generic;
 using System.Security.Authentication;
 
 namespace FoxPhonebook.API.API.Filters

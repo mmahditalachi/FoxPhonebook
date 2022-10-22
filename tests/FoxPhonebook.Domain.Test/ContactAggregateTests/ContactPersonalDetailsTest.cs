@@ -1,9 +1,4 @@
 ﻿using FoxPhonebook.Domain.AggregatesModel.ContactAggregateModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FoxPhonebook.Domain.Test.ContactAggregateTests
 {
@@ -67,9 +62,10 @@ namespace FoxPhonebook.Domain.Test.ContactAggregateTests
         [TestCase("", "", "")]
         [TestCase(null, null, null)]
         public void ShouldThrowArgumentExceptionWhenFirstNameOrLastNameOrCompanyNameIsEmptyOrNull(
-            string firstName ,string lastName,string companyName)
-        {   
-            FluentActions.Invoking(() => {
+            string firstName, string lastName, string companyName)
+        {
+            FluentActions.Invoking(() =>
+            {
                 var contact = new ContactPersonalDetails(firstName, lastName, companyName);
             }).Should().Throw<ArgumentException>();
         }

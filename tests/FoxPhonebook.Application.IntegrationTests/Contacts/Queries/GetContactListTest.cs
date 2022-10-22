@@ -1,10 +1,5 @@
 ﻿using FoxPhonebook.Application.Contacts.Queries.GetContactList;
 using FoxPhonebook.Domain.AggregatesModel.ContactAggregateModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FoxPhonebook.Application.IntegrationTests.Contacts.Queries
 {
@@ -57,7 +52,7 @@ namespace FoxPhonebook.Application.IntegrationTests.Contacts.Queries
             contact_two.AddOrUpdatePhoneNumber(new ContactPhoneNumber("home", "09127000000"));
             contact_two.AddContactTag(tag_two);
             await AddAsync(contact_two);
-            var query = new GetContactListQuery() { TagId = tag_one.Id};
+            var query = new GetContactListQuery() { TagId = tag_one.Id };
 
             // Act
             var result = await SendAsync(query);

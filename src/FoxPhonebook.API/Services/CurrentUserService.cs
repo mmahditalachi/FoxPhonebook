@@ -1,6 +1,4 @@
 ﻿using FoxPhonebook.Application.Common.Interfaces;
-using Microsoft.AspNetCore.Http;
-using System;
 using System.Security.Claims;
 
 namespace FoxPhonebook.API.Services

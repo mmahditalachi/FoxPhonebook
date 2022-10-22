@@ -1,11 +1,6 @@
 ﻿using FoxPhonebook.Application.Common.Exceptions;
 using FoxPhonebook.Application.Contacts.Commands.CreateContact;
 using FoxPhonebook.Domain.AggregatesModel.ContactAggregateModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FoxPhonebook.Application.IntegrationTests.Contacts.Commands;
 
