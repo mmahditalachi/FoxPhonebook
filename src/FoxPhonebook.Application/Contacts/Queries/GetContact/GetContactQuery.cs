@@ -26,7 +26,7 @@ namespace FoxPhonebook.Application.Contacts.Queries.GetContact
             return await _context.Contacts
                 .ProjectTo<GetContactDto>(_mapper.ConfigurationProvider)
                 .AsNoTracking()
-                .SingleOrDefaultAsync(e => e.Id == request.ContactId) ?? throw new NotFoundException(nameof(Contact), request.ContactId);
+                .SingleOrDefaultAsync(e => e.Id == request.ContactId, cancellationToken) ?? throw new NotFoundException(nameof(Contact), request.ContactId);
         }
     }
 }
