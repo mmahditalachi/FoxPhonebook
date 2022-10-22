@@ -18,6 +18,7 @@ namespace FoxPhonebook.API.API.Filters
                 //{ typeof(ValidationException), HandleValidationException },
                 { typeof(NotFoundException), HandleNotFoundException },
                 { typeof(FluentValidation.ValidationException), HandleValidationException },
+                { typeof(ValidationException), HandleApplicationValidationException },
                 { typeof(InvalidOperationException), HandleInvalidOperationException },
                 { typeof(AuthenticationException), HandleAuthenticationException },
             };
@@ -64,7 +65,7 @@ namespace FoxPhonebook.API.API.Filters
 
         private void HandleNotFoundException(ExceptionContext context)
         {
-            var exception = context.Exception as NotFoundException;
+            var exception = (NotFoundException)context.Exception;
 
             Log.Error(exception, nameof(NotFoundException));
 
@@ -80,9 +81,26 @@ namespace FoxPhonebook.API.API.Filters
             context.ExceptionHandled = true;
         }
 
+        private void HandleApplicationValidationException(ExceptionContext context)
+        {
+            var exception = (ValidationException)context.Exception;
+
+            Log.Error(exception, "ValidationException");
+
+            var details = new ValidationProblemDetails()
+            {
+                Detail = exception.HelpLink,                 
+                Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1"
+            };
+
+            context.Result = new BadRequestObjectResult(details);
+
+            context.ExceptionHandled = true;
+        }
+
         private void HandleValidationException(ExceptionContext context)
         {
-            var exception = context.Exception as FluentValidation.ValidationException;
+            var exception = (FluentValidation.ValidationException)context.Exception;
 
             Log.Error(exception, "ValidationException");
 
@@ -99,7 +117,7 @@ namespace FoxPhonebook.API.API.Filters
 
         private void HandleAuthenticationException(ExceptionContext context)
         {
-            var exception = context.Exception as AuthenticationException;
+            var exception = (AuthenticationException)context.Exception;
 
             Log.Error(exception, nameof(AuthenticationException));
 
@@ -117,7 +135,7 @@ namespace FoxPhonebook.API.API.Filters
 
         private void HandleInvalidOperationException(ExceptionContext context)
         {
-            var exception = context.Exception as InvalidOperationException;
+            var exception = (InvalidOperationException)context.Exception;
 
             Log.Error(exception, nameof(InvalidOperationException));
 

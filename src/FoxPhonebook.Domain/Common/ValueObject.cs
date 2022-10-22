@@ -52,10 +52,5 @@
         {
             return !(a == b);
         }
-
-        public ValueObject GetCopy()
-        {
-            return MemberwiseClone() as ValueObject;
-        }
     }
 }
