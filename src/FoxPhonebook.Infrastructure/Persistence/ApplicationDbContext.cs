@@ -27,6 +27,7 @@ namespace FoxPhonebook.Infrastructure.Persistence
         }
 
         public DbSet<Contact> Contacts => Set<Contact>();
+        public DbSet<ContactTag> ContactTags => Set<ContactTag>();
         public DbSet<Tag> Tags => Set<Tag>();
 
         protected override void OnModelCreating(ModelBuilder builder)

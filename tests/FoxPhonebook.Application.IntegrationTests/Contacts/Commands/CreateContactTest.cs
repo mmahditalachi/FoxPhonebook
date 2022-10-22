@@ -25,7 +25,7 @@ public class CreateContactTest : TestBase
             FirstName = "Mohammad",
             LastName = "Talachi",
             CompanyName = "DDD",
-            BirthDate = new DateOnly(1999, 11, 24),
+            BirthDate = new DateTime(1999, 11, 24),
             EmailList = new List<ContactEmail> { new ContactEmail("mohammadmahditalachi@gmail.com") },
             IsFavorite = true,
             PhoneNumberList = new List<ContactPhoneNumber>
@@ -45,7 +45,7 @@ public class CreateContactTest : TestBase
         item?.PersonalDetails.FirstName.Should().Be(cmd.FirstName.ToLower());
         item?.PersonalDetails.LastName.Should().Be(cmd.LastName.ToLower());
         item?.PersonalDetails.CompanyName.Should().Be(cmd.CompanyName.ToLower());
-        item?.BirthDate.Should().Be(cmd.BirthDate);
+        item?.BirthDate.Should().Be(DateOnly.FromDateTime(cmd.BirthDate));
         item?.IsFavorite.Should().Be(cmd.IsFavorite);
         item?.PhoneNumbers.Should().HaveCount(cmd.PhoneNumberList.Count);
         item?.PhoneNumbers.Should().BeEquivalentTo(cmd.PhoneNumberList);
@@ -53,7 +53,7 @@ public class CreateContactTest : TestBase
         item?.Emails.Should().BeEquivalentTo(cmd.EmailList);
 
         var contactTag = await FindAsync<ContactTag>(tag.Id, contactId);
-        contactTag.Should().NotBeNull();        
+        contactTag.Should().NotBeNull();
     }
 
     [Test]
@@ -68,7 +68,7 @@ public class CreateContactTest : TestBase
             FirstName = "Mohammad",
             LastName = "Talachi",
             CompanyName = "DDD",
-            BirthDate = new DateOnly(1999, 11, 24),
+            BirthDate = new DateTime(1999, 11, 24),
             EmailList = new List<ContactEmail> { new ContactEmail("mohammadmahditalachi@gmail.com") },
             IsFavorite = true,
             TagIdList = new List<Guid> { tag.Id },
@@ -88,7 +88,7 @@ public class CreateContactTest : TestBase
             FirstName = "Mohammad",
             LastName = "Talachi",
             CompanyName = "DDD",
-            BirthDate = new DateOnly(1999, 11, 24),
+            BirthDate = new DateTime(1999, 11, 24),
             EmailList = new List<ContactEmail> { new ContactEmail("mohammadmahditalachi@gmail.com") },
             IsFavorite = true,
             PhoneNumberList = new List<ContactPhoneNumber>
@@ -107,7 +107,7 @@ public class CreateContactTest : TestBase
         item?.PersonalDetails.FirstName.Should().Be(cmd.FirstName.ToLower());
         item?.PersonalDetails.LastName.Should().Be(cmd.LastName.ToLower());
         item?.PersonalDetails.CompanyName.Should().Be(cmd.CompanyName.ToLower());
-        item?.BirthDate.Should().Be(cmd.BirthDate);
+        item?.BirthDate.Should().Be(DateOnly.FromDateTime(cmd.BirthDate));
         item?.IsFavorite.Should().Be(cmd.IsFavorite);
         item?.PhoneNumbers.Should().HaveCount(cmd.PhoneNumberList.Count);
         item?.PhoneNumbers.Should().BeEquivalentTo(cmd.PhoneNumberList);

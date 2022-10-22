@@ -28,8 +28,8 @@ namespace FoxPhonebook.Application.Contacts.Commands.UpdateContact
 
             RuleFor(e => e.BirthDate)
                 .NotEmpty()
-                .GreaterThan(DateOnly.MinValue)
-                .LessThan(DateOnly.MaxValue);
+                .GreaterThan(DateTime.MinValue)
+                .LessThan(DateTime.MaxValue);
 
             RuleFor(e => e.PhoneNumberList)
                 .NotNull()

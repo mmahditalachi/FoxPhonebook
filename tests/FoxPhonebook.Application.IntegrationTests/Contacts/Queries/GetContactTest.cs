@@ -31,13 +31,12 @@ namespace FoxPhonebook.Application.IntegrationTests.Contacts.Queries
             result?.FirstName.Should().Be(contact.PersonalDetails.FirstName);
             result?.LastName.Should().Be(contact.PersonalDetails.LastName);
             result?.CompanyName.Should().Be(contact.PersonalDetails.CompanyName);
-            result?.BirthDate.Should().Be(contact.BirthDate);
             result?.IsFavorite.Should().Be(contact.IsFavorite);
             result?.PhoneNumberList.Should().HaveCount(contact.PhoneNumbers.Count);
             result?.PhoneNumberList.Should().BeEquivalentTo(contact.PhoneNumbers);
             result?.EmailList.Should().HaveCount(contact.Emails.Count);
             result?.EmailList.Should().BeEquivalentTo(contact.Emails);
-            result?.TagList.Should().HaveCount(contact.ContactTags.Count);            
+            result?.TagList.Should().HaveCount(contact.ContactTags.Count);
         }
     }
 }

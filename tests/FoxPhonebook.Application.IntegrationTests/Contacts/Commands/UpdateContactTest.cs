@@ -30,7 +30,7 @@ public class UpdateContactTest : TestBase
             FirstName = "MohammadAli",
             LastName = "TalachiPour",
             CompanyName = "arcade",
-            BirthDate = new DateOnly(2000, 12, 25),
+            BirthDate = new DateTime(2000, 12, 25),
             EmailList = new List<ContactEmail> { new ContactEmail("mohammadmahditalachi@gmail.com") },
             IsFavorite = false,
             PhoneNumberList = new List<ContactPhoneNumber>
@@ -51,7 +51,7 @@ public class UpdateContactTest : TestBase
         item?.PersonalDetails.FirstName.Should().Be(cmd.FirstName.ToLower());
         item?.PersonalDetails.LastName.Should().Be(cmd.LastName.ToLower());
         item?.PersonalDetails.CompanyName.Should().Be(cmd.CompanyName.ToLower());
-        item?.BirthDate.Should().Be(cmd.BirthDate);
+        item?.BirthDate.Should().Be(DateOnly.FromDateTime(cmd.BirthDate));
         item?.IsFavorite.Should().Be(cmd.IsFavorite);
         item?.PhoneNumbers.Should().HaveCount(cmd.PhoneNumberList.Count);
         item?.PhoneNumbers.Should().BeEquivalentTo(cmd.PhoneNumberList);

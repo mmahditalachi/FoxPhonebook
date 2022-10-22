@@ -1,5 +1,6 @@
 ﻿using FoxPhonebook.Application.Common.Exceptions;
 using FoxPhonebook.Domain.AggregatesModel.ContactAggregateModel;
+using FoxPhonebook.Domain.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,8 @@ namespace FoxPhonebook.Application.Contacts.Commands.RemoveContact
         {
             var contact = await _context.Contacts.FindAsync(request.ContactId)
                 ?? throw new NotFoundException(nameof(Contact), request.ContactId);
+
+            contact.DomainEvents.Add(new ContactRemovedDomainEvent(contact));
 
             _context.Contacts.Remove(contact);
             await _context.SaveChangesAsync();

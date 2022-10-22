@@ -1,5 +1,6 @@
 ﻿using FoxPhonebook.Application.Common.Exceptions;
 using FoxPhonebook.Domain.AggregatesModel.ContactAggregateModel;
+using FoxPhonebook.Domain.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace FoxPhonebook.Application.Contacts.Commands.CreateContact
         public string FirstName { get; init; } = string.Empty;
         public string LastName { get; init; } = string.Empty;
         public string CompanyName { get; init; } = string.Empty;
-        public DateOnly BirthDate { get; init; }
+        public DateTime BirthDate { get; init; }
         public bool IsFavorite { get; init; }
 
         public IReadOnlyCollection<Guid> TagIdList { get; init; } = new List<Guid>();
@@ -34,7 +35,7 @@ namespace FoxPhonebook.Application.Contacts.Commands.CreateContact
         public async Task<Guid> Handle(CreateContactCommand request, CancellationToken cancellationToken)
         {
             var personalDetails = new ContactPersonalDetails(request.FirstName, request.LastName, request.CompanyName);
-            var contact = new Contact(personalDetails, request.BirthDate, request.IsFavorite);
+            var contact = new Contact(personalDetails,DateOnly.FromDateTime(request.BirthDate), request.IsFavorite);
 
             foreach (var email in request.EmailList)
                 contact.AddOrUpdateContactEmail(email);
@@ -50,7 +51,10 @@ namespace FoxPhonebook.Application.Contacts.Commands.CreateContact
                 contact.AddContactTag(tag);
             }
 
+            contact.DomainEvents.Add(new ContactCreatedDomainEvent(contact));
+
             _context.Contacts.Add(contact);
+
             await _context.SaveChangesAsync();
 
             return contact.Id;

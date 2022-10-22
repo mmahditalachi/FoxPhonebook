@@ -1,5 +1,6 @@
 ﻿using FoxPhonebook.Application.Common.Exceptions;
 using FoxPhonebook.Domain.AggregatesModel.ContactAggregateModel;
+using FoxPhonebook.Domain.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace FoxPhonebook.Application.Contacts.Commands.UpdateContact
         public string FirstName { get; init; } = string.Empty;
         public string LastName { get; init; } = string.Empty;
         public string CompanyName { get; init; } = string.Empty;
-        public DateOnly BirthDate { get; init; }
+        public DateTime BirthDate { get; init; }
         public bool IsFavorite { get; init; }
 
         public IReadOnlyCollection<Guid> TagIdList { get; init; } = new List<Guid>();
@@ -39,14 +40,14 @@ namespace FoxPhonebook.Application.Contacts.Commands.UpdateContact
 
             var personalDetails = new ContactPersonalDetails(request.FirstName, request.LastName, request.CompanyName);
 
-            contact.Update(personalDetails, request.BirthDate, request.IsFavorite);
+            contact.Update(personalDetails, DateOnly.FromDateTime(request.BirthDate), request.IsFavorite);
 
             var removedEmails = contact.Emails.Except(request.EmailList).ToList();
             foreach (var contactEmail in removedEmails)
                 contact.RemoveContactEmail(contactEmail.Email);
             foreach (var contactEmail in request.EmailList)
                 contact.AddOrUpdateContactEmail(contactEmail);
-            
+
             var removedPhoneNumbers = contact.PhoneNumbers.Except(request.PhoneNumberList).ToList();
             foreach (var contactPhoneNumber in removedPhoneNumbers)
                 contact.RemovePhoneNumber(contactPhoneNumber.PhoneNumber);
@@ -63,6 +64,8 @@ namespace FoxPhonebook.Application.Contacts.Commands.UpdateContact
 
                 contact.AddContactTag(tag);
             }
+
+            contact.DomainEvents.Add(new ContactUpdatedDomainEvent(contact));
 
             _context.Contacts.Update(contact);
             await _context.SaveChangesAsync();

@@ -32,6 +32,8 @@ public class Program
             {
                 context.Database.Migrate();
             }
+
+            await ApplicationDbContextSeed.StartupSeed(context);
         }
         catch (DbUpdateException ex)
         {
