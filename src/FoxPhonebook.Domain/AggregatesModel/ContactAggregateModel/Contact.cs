@@ -2,6 +2,10 @@
 {
     public class Contact : AggregateRoot<Guid>
     {
+        protected Contact()
+        {
+
+        }
         public Contact(ContactPersonalDetails personalDetails, DateOnly birthDate, bool isFavorite)
         {
             Id = Guid.NewGuid();
