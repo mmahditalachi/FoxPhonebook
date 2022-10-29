@@ -10,15 +10,18 @@ namespace FoxPhonebook.Infrastructure.Persistence
     {
         private readonly ICurrentUserService _currentUserService;
         private readonly IDomainEventService _domainEventService;
+        private readonly IDateTime _dateTime;
 
         public ApplicationDbContext(
             DbContextOptions<ApplicationDbContext> options,
             ICurrentUserService currentUserService,
-            IDomainEventService domainEventService
+            IDomainEventService domainEventService,
+            IDateTime dateTime
             ) : base(options)
         {
             _currentUserService = currentUserService;
             _domainEventService = domainEventService;
+            _dateTime = dateTime;
         }
 
         public DbSet<Contact> Contacts => Set<Contact>();
@@ -39,12 +42,12 @@ namespace FoxPhonebook.Infrastructure.Persistence
                 {
                     case EntityState.Added:
                         entry.Entity.CreatedBy = _currentUserService.UserId;
-                        entry.Entity.Created = DateTime.Now;
+                        entry.Entity.Created = _dateTime.Now;
                         break;
 
                     case EntityState.Modified:
                         entry.Entity.LastModifiedBy = _currentUserService.UserId;
-                        entry.Entity.LastModified = DateTime.Now;
+                        entry.Entity.LastModified = _dateTime.Now;
                         break;
                 }
             }
